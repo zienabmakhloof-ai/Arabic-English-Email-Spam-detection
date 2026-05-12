@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ميل باونز</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(#d0daf0 20%, white 70%, #dce4f7 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background-color: #ffffff;
+      padding: 20px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header img {
+      height: 50px;
+      margin-left: 50px;
+    }
+
+    header a {
+      margin-right: 10px;
+      margin-left: 30px;
+      color: rgb(179, 176, 176);
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-right: auto;
+    }
+
+    .dropdown-button {
+      background-color: #f0f4f8;
+      color: rgb(179, 176, 176);
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
+      text-align: right;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .dropdown-content a {
+      color: rgb(179, 176, 176);
+      padding: 10px 20px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f0f4f8;
+    }
+
+    .hero {
+      text-align: right;
+      padding: 50px;
+      height: 400px;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      color: #123a92;
+    }
+
+    .hero p {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #123a92;
+      width: 50%;
+    }
+
+    .hero .buttons {
+      margin-top: 20px;
+    }
+
+    .hero button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .check-btn {
+      background: gray;
+      color: white;
+      margin-left: 10px;
+    }
+
+    .chess-animation {
+      position: absolute;
+      left: 100px;
+      top: 200px;
+      width: 320px;
+      height: 120px;
+      direction: rtl;
+    }
+
+    .step-wrapper {
+      position: absolute;
+      top: 70px;
+      transform: translate(50%, -50%);
+      text-align: center;
+      z-index: 2;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      background-color: #123a92;
+      border-radius: 50%;
+      margin: 0 auto;
+      box-shadow: 0 0 6px rgba(18, 58, 146, 0.4);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    .label {
+      font-size: 12px;
+      color: #123a92;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.6; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .chess-animation {
+        display: none !important;
+      }
+    }
+
+    hr {
+      background-color: #123a92;
+      height: 2px;
+      border: none;
+      margin: 10px;
+    }
+
+    .info-section {
+      text-align: center;
+      padding: 30px;
+      margin-top: 20px;
+      color: #123a92;
+    }
+
+    .info-section img {
+      margin-top: 15px;
+      width: 30px;
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="/static/logo.jpg" alt="شعار الموقع">
+  <a href="#" onclick="location.href='/about'" class="about-link">من نحن</a>
+  <nav>
+    <div class="dropdown">
+      <div class="dropdown-button">
+        <span class="language-text">العربية</span> <span>&#9662;</span>
+      </div>
+      <div class="dropdown-content">
+        <a href="#" onclick="setLanguage('en')">English</a>
+        <a href="#" onclick="setLanguage('ar')">العربية</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="hero">
+  <h1 style="font-size: 48px;" class="mail-text">ميل</h1>
+  <h1 style="font-size: 48px;" class="pawns-text">باونز</h1>
+  <p class="hero-text">رفيقك الذكي لحماية البريد الإلكتروني. يكتشف المحتوى الخبيث بسهولة، لضمان تجربة أكثر أمانًا لجميع المستخدمين.</p>
+  <div class="buttons">
+    <button class="check-btn" onclick="location.href='/check'">فحص سريع للبريد</button>
+  </div>
+</div>
+
+<div class="chess-animation">
+  <div style="position: absolute; top: 70px; left: 0; right: 0; height: 2px; background-color: #ccc; z-index: 0;"></div>
+
+  <div class="step-wrapper" style="right: 0%;">
+    <div class="dot"></div>
+    <div class="label">الفحص</div>
+  </div>
+  <div class="step-wrapper" style="right: 50%;">
+    <div class="dot"></div>
+    <div class="label">تحليل</div>
+  </div>
+  <div class="step-wrapper" style="right: 100%;">
+    <div class="dot"></div>
+    <div class="label">تم الكشف</div>
+  </div>
+
+  <div id="line-pawn" style="position: absolute; top: 40px; right: 0%; font-size: 60px; color: #123a92; transform: translate(50%, -50%); transition: all 0.6s ease; z-index: 3;">♟</div>
+</div>
+
+<hr>
+
+<div class="info-section">
+  <p class="info-text1">🔧 ميزة قادمة — قريبًا!</p>
+  <p class="info-text2">احمِ بريدك الإلكتروني كما لم يحدث من قبل</p>
+  <p class="info-text3">ابقَ متقدمًا على تهديدات التصيّد مباشرة من صندوق الوارد</p>
+  <img src="static/yahoo.png" alt="ياهو">
+  <img src="static/gmail.png" alt="جيميل">
+  <img src="static/outlook.png" alt="آوتلوك">
+</div>
+
+<script>
+  const steps = document.querySelectorAll('.step-wrapper');
+  const pawn = document.getElementById('line-pawn');
+  let index = 0;
+
+  function movePawn() {
+    const target = steps[index];
+    pawn.style.right = target.style.right;
+    index = (index + 1) % steps.length;
+  }
+
+  movePawn();
+  setInterval(movePawn, 2000);
+
+  async function setLanguage(lang) {
+    try {
+        const response = await fetch('/set_language', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ lang: lang })
+        });
+
+        if (response.ok) {
+            // تأكد من أن الصفحة الحالية تدعم اللغة المطلوبة
+            const currentPath = window.location.pathname;
+            const newPath = currentPath.replace(/_ar\.html$/, '.html').replace(/\.html$/, '_ar.html');
+            
+            // إعادة تحميل الصفحة الحالية بعد تغيير اللغة
+            window.location.reload();
+        } else {
+            const errorData = await response.json();
+            alert(errorData.detail || 'حدث خطأ أثناء تغيير اللغة');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('حدث خطأ أثناء تغيير اللغة');
+    }
+}
+</script>
+
+</body>
+</html>

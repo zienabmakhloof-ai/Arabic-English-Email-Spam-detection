@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البريد غير المرغوب</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, white, #eef2fc);
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header img {
+            height: 50px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        header a {
+            margin-right: 10px;
+            margin-left: 30px;
+            color: rgb(100, 100, 100);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: auto;
+        }
+
+        .sidebar {
+            width: 200px;
+            background: #f9f9f9;
+            padding: 20px;
+            position: fixed;
+            right: -220px;
+            top: 80px;
+            height: calc(100vh - 80px);
+            transition: 0.3s ease;
+            box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            margin-top: 5px;
+            border-radius: 5px;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #e0e7ff;
+            color: #123a92;
+            font-weight: bold;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: #123a92;
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+        }
+
+        .menu-btn:hover {
+            background-color: #0e2a7b;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .main-content {
+            margin-right: 20px;
+            padding: 40px;
+            flex-grow: 1;
+            transition: 0.3s;
+        }
+
+        .main-content.shifted {
+            margin-right: 220px;
+        }
+
+        .email-item {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            text-align: right;
+        }
+
+        .email-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .email-content {
+            color: #666;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .email-result {
+            font-weight: bold;
+            color: red;
+        }
+
+        .email-result.safe {
+            color: green;
+        }
+
+        .email-date {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #123a92;
+            color: white;
+            padding: 20px 40px;
+            margin-top: auto;
+        }
+
+        .footer-text {
+            font-size: 12px;
+        }
+
+        .error-message {
+            color: red;
+            background: #ffeeee;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ffcccc;
+        }
+
+        .no-emails {
+            text-align: center;
+            padding: 30px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            color: #666;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+
+        .email-actions {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .delete-btn:hover {
+            background: #cc0000;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <button class="menu-btn" onclick="toggleSidebar()" id="menuIcon">≡</button>
+    <img src="/static/logo.jpg" alt="شعار الموقع" onclick="window.location.href='/ar'">
+    <a onclick="location.href='/about'">من نحن</a>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <a href="/ar">🏠 الصفحة الرئيسية</a>
+    <a href="/check">📩 فحص سريع للبريد</a>
+    <a href="/junk" class="active">📂 غير المرغوب</a>
+    <h4>أخرى</h4>
+    <a onclick="location.href='/help'">❓ المساعدة</a>
+</div>
+
+<div class="main-content" id="main-content">
+    <h1>البريد غير المرغوب</h1>
+    <div id="emails-container"></div>
+</div>
+
+<div class="footer">
+    <span class="footer-text">2025 بريد آمن. جميع الحقوق محفوظة.</span>
+</div>
+
+<script>
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuIcon");
+
+    if (sidebar.classList.contains("open")) {
+        sidebar.classList.remove("open");
+        menuBtn.innerText = "≡";
+        menuBtn.style.right = "15px";
+    } else {
+        sidebar.classList.add("open");
+        menuBtn.innerText = "×";
+        menuBtn.style.right = "200px";
+    }
+}
+
+async function deleteEmail(timestamp) {
+    if (confirm('هل أنت متأكد أنك تريد حذف هذا البريد الإلكتروني؟')) {
+        try {
+            const response = await fetch('/delete_email', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ timestamp: timestamp })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'فشل حذف البريد الالكتروني');
+            }
+
+            alert('تم الحذف بنجاح');
+            loadEmails();
+        } catch (error) {
+            console.error('Error:', error);
+            alert('خطأ في حذف البريد الإلكتروني: ' + error.message);
+        }
+    }
+}
+
+async function loadEmails() {
+    const container = document.getElementById('emails-container');
+    container.innerHTML = '<div class="loading">جاري تحميل البريد...</div>';
+
+    try {
+        const response = await fetch('/api/junk_emails');
+        if (!response.ok) throw new Error('فشل الاتصال بالخادم');
+
+        const data = await response.json();
+        container.innerHTML = '';
+
+        if (!data.emails || data.emails.length === 0) {
+            container.innerHTML = '<div class="no-emails">لا توجد رسائل غير مرغوب فيها</div>';
+            return;
+        }
+
+        data.emails.forEach(email => {
+            const emailDiv = document.createElement('div');
+            emailDiv.className = 'email-item';
+
+            const safeValue = val => (!val || val === 'NaN' || val === 'inf' || val === '-inf') ? 'غير متاح' : val;
+            const date = email.timestamp ? new Date(email.timestamp).toLocaleString() : 'بدون تاريخ';
+            const result = email.Final_Result === 'Malicious' ? 'خبيث' : 'آمن';
+
+            emailDiv.innerHTML = `
+                <div class="email-header">
+                    <span class="email-date">${date}</span>
+                    <span class="email-result ${email.Final_Result === 'Not Malicious' ? 'safe' : ''}">${result}</span>
+                </div>
+                <div class="email-content">${safeValue(email.Email)}</div>
+                <div class="email-actions">
+                    <button class="delete-btn" onclick="deleteEmail('${email.timestamp}')">حذف</button>
+                </div>
+            `;
+
+            container.appendChild(emailDiv);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        container.innerHTML = '<div class="error-message">فشل في تحميل البريد: ' + (error.message || 'خطأ غير معروف') + '</div>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadEmails);
+</script>
+</body>
+</html>

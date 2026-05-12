@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="Mail Pawns" data-ar="ميل باونز">Mail Pawns</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(#d0daf0 20%, white 70%, #dce4f7 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #ffffff;
+            padding: 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header img {
+            height: 50px; 
+            margin-right: 50px;
+        }
+        header a {
+            margin-left: 10px;
+            margin-right: 30px;
+            color: rgb(179, 176, 176);
+            text-decoration: none;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+            margin-left: auto; 
+        }
+       
+        .dropdown-button {
+            background-color: #f0f4f8;  
+            color: rgb(179, 176, 176);
+            padding: 10px 20px;
+            border: 1px solid #ccc; 
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px; 
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: rgb(179, 176, 176);
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f0f4f8; 
+        }
+        .contact-button {
+            background-color: #000000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+     
+        .hero {
+            text-align: left;
+            padding: 50px;
+            height: 400px;
+        }
+        .hero h1 {
+            font-size: 40px;
+            color: #123a92;
+        }
+        .hero p {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #123a92;
+            width: 50%;
+        }
+        .hero .buttons {
+            margin-top: 20px;
+        }
+        .hero button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .check-btn {
+            background: gray;
+            color: white;
+            margin-right: 10px;
+        }
+        .connect-btn {
+            background: #123a92;
+            color: white;
+        }
+        .spam-box {
+            position: absolute;
+            top: 170px;
+            right: 100px;
+            width: 300px;
+            background: white;
+            padding: 15px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        .spam-box h3 {
+            font-size: 16px;
+            color: #333;
+        }
+        .spam-box p {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        .spam-box .buttons {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .spam-box button {
+            padding: 7px 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .delete-btn {
+            background: red;
+            color: white;
+        }
+        .move-btn {
+            background: lightgray;
+            color: black;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px; 
+            right: 10px; 
+            font-size: 16px;
+            cursor: pointer;
+            color: gray; 
+            font-weight: bold;
+        }
+        .close-btn:hover {
+           color: black; 
+        }
+
+        hr {
+            background-color: #123a92;
+            height: 2px;
+            border: none; 
+            margin: 10px; 
+        }
+        .info-section {
+            text-align: center;
+            padding: 30px;
+            margin-top: 20px;
+            color: #123a92;
+        }
+        .info-section img {
+            margin-top: 15px;
+            width: 30px;
+            margin-right: 5px;
+        }
+        .footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #123a92;
+            color: white;
+            padding: 50px 0;
+        }
+        .footer div {
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+        }
+        .newsletter input {
+            padding: 8px;
+            border: none;
+            border-radius: 3px;
+            width: 200px;
+            margin-top: 10px;
+        }
+        .newsletter button {
+            padding: 8px 10px;
+            border: none;
+            background: lightgray;
+            color: black;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Arabic styles */
+        body.rtl {
+            direction: rtl;
+        }
+        body.rtl .hero {
+            text-align: right;
+        }
+        body.rtl .info-section {
+            text-align: center;
+        }
+        body.rtl .dropdown-content {
+            text-align: right;
+        }
+        body[dir="rtl"] {
+            text-align: right;
+        }
+        body[dir="rtl"] .hero {
+            text-align: right;
+        }
+        body[dir="rtl"] .info-section {
+            text-align: center;
+        }
+        body[dir="rtl"] .dropdown-content {
+            text-align: right;
+        }
+        body[dir="rtl"] .sidebar {
+            right: -220px;
+            left: auto;
+        }
+        body[dir="rtl"] .sidebar.open {
+            right: 0;
+            left: auto;
+        }
+        body[dir="rtl"] .menu-btn {
+            right: 15px;
+            left: auto;
+        }
+        body[dir="rtl"] .main-content {
+            margin-right: 20px;
+            margin-left: 0;
+        }
+        body[dir="rtl"] .main-content.shifted {
+            margin-right: 220px;
+            margin-left: 0;
+        }
+		
+		
+.step-wrapper {
+  position: absolute;
+  top: 70px;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.dot {
+  width: 16px;
+  height: 16px;
+  background-color: #123a92;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0 0 6px rgba(18, 58, 146, 0.4);
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.label {
+  font-size: 12px;
+  color: #123a92;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+@media (max-width: 768px) {
+  .chess-animation {
+    display: none !important;
+  }
+}
+
+
+
+    </style>
+
+
+</head>
+<body>
+
+
+<header>
+    <img src="/static/logo.jpg" alt="Logo">
+<a href="#" onclick="location.href='/about'" class="about-link" data-en="About Us" data-ar="من نحن">About Us</a>
+    <nav>
+        <div class="dropdown">
+            <div class="dropdown-button">
+                <span class="language-text" data-en="Eng" data-ar="العربية">Eng</span> <span>&#9662;</span>
+            </div>
+            <div class="dropdown-content">
+                <div class="dropdown-content">
+                    <a href="#" onclick="setLanguage('en')">English</a>
+                    <a href="#" onclick="setLanguage('ar')">العربية</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+    <!-- Hero Section -->
+    <div class="hero">
+        <h1 style="font-size: 48px; margin: 0;" class="mail-text">Mail</h1>
+        <h1 style="font-size: 48px; margin: 0;" class="pawns-text">Pawns</h1>
+
+        <p class="hero-text">Your smart companion for email security. Effortlessly detect malicious content, ensuring a safer experience for all users. 
+
+</p>
+        <div class="buttons">
+            <button class="check-btn" onclick="location.href='/check'" class="check-link">Quick Email Check</button>
+        </div>
+    </div>
+
+
+	<div class="chess-animation" style="position: absolute; right: 100px; top: 200px; width: 320px; height: 120px;">
+  <div style="position: absolute; top: 70px; left: 0; right: 0; height: 2px; background-color: #ccc; z-index: 0;"></div>
+
+  <div class="step-wrapper" style="left: 0%;">
+    <div class="dot"></div>
+    <div class="label">Scanning</div>
+  </div>
+  <div class="step-wrapper" style="left: 50%;">
+    <div class="dot"></div>
+    <div class="label">Analyzing</div>
+  </div>
+  <div class="step-wrapper" style="left: 100%;">
+    <div class="dot"></div>
+    <div class="label">Detected</div>
+  </div>
+
+ 
+
+  <!-- ♟  -->
+  <div id="line-pawn" style="position: absolute; top: 40px; left: 0%; font-size: 60px; color: #123a92; transform: translate(-50%, -50%); transition: all 0.6s ease; z-index: 3;">♟</div>
+</div>
+
+
+ 
+	
+<hr>
+    <!-- Info Section -->
+    <div class="info-section">
+        <p class="info-text1">🔧 Future Feature — Coming Soon !</p>
+        <p class="info-text2">Protect Your Inbox Like Never Before</p>
+        <p class="info-text3">Stay ahead of phishing threats right from your inbox.</p>
+
+
+
+        <img src="static\yahoo.png" alt="Yahoo">
+        <img src="static\gmail.png" alt="Gmail">
+        <img src="static\outlook.png" alt="Outlook">
+    </div>
+
+
+<script>
+
+  const steps = document.querySelectorAll('.step-wrapper');
+  const pawn = document.getElementById('line-pawn');
+  let index = 0;
+
+  function movePawn() {
+    const target = steps[index];
+    pawn.style.left = target.style.left;
+
+    index = (index + 1) % steps.length;
+  }
+
+  movePawn();
+  setInterval(movePawn, 2000);
+
+
+  async function setLanguage(lang) {
+    try {
+        const response = await fetch('/set_language', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ lang: lang })
+        });
+
+        if (response.ok) {
+            // تأكد من أن الصفحة الحالية تدعم اللغة المطلوبة
+            const currentPath = window.location.pathname;
+            const newPath = currentPath.replace(/_ar\.html$/, '.html').replace(/\.html$/, '_ar.html');
+            
+            // إعادة تحميل الصفحة الحالية بعد تغيير اللغة
+            window.location.reload();
+        } else {
+            const errorData = await response.json();
+            alert(errorData.detail || 'حدث خطأ أثناء تغيير اللغة');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('حدث خطأ أثناء تغيير اللغة');
+    }
+}
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<style>
+  #overlayBlocker {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 99998;
+  }
+
+  #cookieNotice {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f0f4ff;
+    color: #123a92;
+    padding: 30px;
+    text-align: center;
+    font-size: 16px;
+    z-index: 99999;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    width: 340px;
+  }
+
+  #cookieNotice button {
+    padding: 10px 20px;
+    margin: 10px 5px 0 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  #cookieNotice .accept {
+    background-color: #123a92;
+    color: white;
+  }
+
+  #cookieNotice .decline {
+    background-color: lightgray;
+    color: black;
+  }
+
+  #cookieNotice .lang-switch {
+    background: none;
+    color: #123a92;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+</style>
+
+<script>
+  function createCookieNotice() {
+    const consent = localStorage.getItem("cookieConsent");
+
+    if (consent === "declined") {
+      showBlockedMessage("en");
+      return;
+    }
+
+    if (consent !== "accepted") {
+      showOverlay("en");
+    }
+  }
+
+  function showOverlay(lang = "en") {
+    removeOverlay();
+
+    const overlay = document.createElement("div");
+    overlay.id = "overlayBlocker";
+
+    const notice = document.createElement("div");
+    notice.id = "cookieNotice";
+
+    const content = {
+      en: `
+        <div id="cookieContent">
+          <p> <strong>Notice:</strong> We use cookies locally to ensure your privacy.</p>
+          <button class="accept" onclick="acceptCookies()">Accept</button>
+          <button class="decline" onclick="declineCookies()">Decline</button>
+          <br>
+          <button class="lang-switch" onclick="showOverlay('ar')">العربية</button>
+        </div>
+      `,
+      ar: `
+        <div id="cookieContent">
+          <p><strong>تنبيه:</strong> نقوم باستخدام الكوكيز محليًا لضمان خصوصيتك </p>
+          <button class="accept" onclick="acceptCookies()">موافق</button>
+          <button class="decline" onclick="declineCookies()">رفض</button>
+          <br>
+          <button class="lang-switch" onclick="showOverlay('en')">English</button>
+        </div>
+      `
+    };
+
+    notice.innerHTML = content[lang];
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(notice);
+    document.body.style.overflow = "hidden";
+  }
+
+  function showBlockedMessage(lang = "en") {
+    removeOverlay();
+
+    const overlay = document.createElement("div");
+    overlay.id = "overlayBlocker";
+
+    const notice = document.createElement("div");
+    notice.id = "cookieNotice";
+
+    const content = {
+      en: `
+        <div id="cookieContent">
+          <p>You cannot use the site without accepting cookies.</p>
+          <button class="accept" onclick="acceptCookies()">Accept</button>
+          <br>
+          <button class="lang-switch" onclick="showBlockedMessage('ar')">العربية</button>
+        </div>
+      `,
+      ar: `
+        <div id="cookieContent">
+          <p> تعذر استخدام الموقع دون قبول الكوكيز </p>
+          <button class="accept" onclick="acceptCookies()">موافق</button>
+          <br>
+          <button class="lang-switch" onclick="showBlockedMessage('en')">English</button>
+        </div>
+      `
+    };
+
+    notice.innerHTML = content[lang];
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(notice);
+    document.body.style.overflow = "hidden";
+  }
+
+  function acceptCookies() {
+    localStorage.setItem("cookieConsent", "accepted");
+    removeOverlay();
+  }
+
+  function declineCookies() {
+    localStorage.setItem("cookieConsent", "declined");
+    showBlockedMessage("en"); 
+  }
+
+  function removeOverlay() {
+    document.getElementById("cookieNotice")?.remove();
+    document.getElementById("overlayBlocker")?.remove();
+    document.body.style.overflow = "";
+  }
+
+  window.onload = createCookieNotice;
+</script>
+
+
+
+
+
+
+</body>
+</html>
