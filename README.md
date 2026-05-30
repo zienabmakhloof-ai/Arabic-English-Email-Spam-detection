@@ -1,271 +1,144 @@
-# Mail Pawns
+# 📧 Mail Pawns — AI-Powered Email Threat Detection
 
-AI-powered spam, phishing, and malicious link detection system with Arabic and English language support.
-
----
-
-## Overview
-
-Mail Pawns is an intelligent email and message analysis platform designed to detect:
-
-- Spam messages
-- Phishing attempts
-- Malicious URLs
-- Suspicious email content
-
-The system combines Natural Language Processing (NLP) models with URL analysis techniques to provide a complete security analysis workflow.
-
-It supports both Arabic and English content and exposes prediction services through a REST API built with FastAPI.
+> **Personal Project** | Developed by **Eng. Zainab Makhloof** | 2025
 
 ---
 
-# Features
+## 📌 Overview
 
-- Arabic and English message analysis
-- Spam and phishing detection
-- Malicious URL detection
-- Automatic language detection
-- REST API using FastAPI
-- HTML frontend templates included
-- Stores suspicious emails for review
-- AI-powered text classification
-- URL extraction and analysis
-- Excel-based data storage
+**Mail Pawns** is an intelligent email security system that detects phishing, spam, and malicious links using artificial intelligence. It supports both **Arabic and English** email analysis, with a dedicated focus on the Arabic language — a critical gap in most cybersecurity tools today.
+
+The system analyzes email text content and embedded URLs to classify threats with high accuracy, presented through a clean, user-friendly web interface.
 
 ---
 
-# Project Architecture
+## 🧠 Models & Accuracy
 
-```text
-Mail-Pawns/
-│
+| Language | Model | Accuracy |
+|----------|-------|----------|
+| 🇸🇦 Arabic | AraBERT (Fine-tuned) | **95.84%** |
+| 🇺🇸 English | BERT — Spam Detector | **96.28%** |
+| 🔗 URL Detection | Logistic Regression | — |
+
+---
+## 🖼️ Page screen
+
+### Home page
+![Homepage](screenshots/home_page.png)
+
+### Arabic Aboutus
+![Homepage](screenshots/ar_aboutus.png)
+
+### English Aboutus
+![Homepage](screenshots/en_aboutus.png)
+
+## 🖼️ Results Preview
+
+### ✅ English — Safe Email
+> Email content classified as **Not Malicious**
+
+![English Safe Result](screenshots/en_safe.png)
+
+---
+
+### 🚨 English — Malicious Email
+> Email content classified as **Malicious**
+
+![English Malicious Result](screenshots/en_malicious.png)
+
+---
+
+### ✅ Arabic — Safe Email (بريد آمن)
+> تم تصنيف المحتوى على أنه **غير ضار**
+
+![Arabic Safe Result](screenshots/ar_safe.png)
+
+---
+
+### 🚨 Arabic — Malicious Email (بريد ضار)
+> تم تصنيف المحتوى على أنه **ضار**
+
+![Arabic Malicious Result](screenshots/ar_malicious.png)
+
+---
+
+## ⚙️ Features
+
+- 🔗 **URL Analysis** — Detects malicious links using a trained Logistic Regression classifier
+- 🌐 **Bilingual Support** — Full Arabic and English email analysis
+- 🤖 **BERT-based Classification** — High-accuracy threat detection using fine-tuned transformer models
+- 🛡️ **User-Friendly** — Simple interface accessible to non-technical users
+- 🔍 **Auto Language Detection** — Automatically identifies the email language
+
+---
+
+## 🗂️ Project Structure
+
+```
+MailPwans/
 ├── app/
-│   ├── data/               # Excel files and datasets
-│   ├── models/             # AI model loading and management
-│   ├── routes/             # API routes/endpoints
-│   ├── services/           # Prediction and business logic
-│   ├── templates/          # HTML frontend pages
-│   │   ├── static/             # CSS / JS / assets
-│   ├── utils/              # URL Utils
-│   └── main.py             # FastAPI application entry 
-│   └── config.py           # System Configration 
-│
+│   ├── main.py                    # App entry point
+│   ├── config.py                  # Configuration & settings
+│   ├── models/
+│   │   └── prediction_models.py   # Model loading (AraBERT, BERT, LR)
+│   ├── services/
+│   │   ├── prediction_service.py  # Core prediction logic
+│   │   └── data_service.py
+│   ├── routes/
+│   │   ├── api_routes.py          # API endpoints
+│   │   └── page_routes.py         # Page routing
+│   ├── utils/
+│   │   └── url_utils.py           # URL feature extraction
+│   └── templates/                 # HTML pages (EN + AR)
 ├── requirements.txt
-├── colab_run.ipynb
-├── EmailSpam_ar.ipynb      # Training model for arabic email
-├── EmailSpam_en.ipynb      # Training model for english email
-├── url_detection.ipynb     # Training model for url detection
-├── README.md
-└── .env
-
+└── README.md
 ```
 
 ---
 
-# Technologies Used
+## 🚀 Running the Project
 
-## Backend
-
-- Python
-- FastAPI
-- Uvicorn
-
-## Machine Learning & NLP
-
-- TensorFlow
-- PyTorch
-- Hugging Face Transformers
-- AraBERT
-- Logistic Regression
-
-## Frontend
-
-- HTML
-- CSS
-- JavaScript
-
-## Storage
-
-- Excel files (.xlsx)
-
----
-
-# AI Models
-
-## 1. Text Classification Models
-
-The project uses different NLP models depending on the detected language:
-
-### Arabic Detection
-
-- AraBERT-based classifier
-- Detects phishing and spam content in Arabic text
-
-### English Detection
-
-- Spam detection model for English emails/messages
-
----
-
-## 2. URL Classification Model
-
-The system analyzes extracted URLs using machine learning techniques to determine whether a link is:
-
-- Safe
-- Suspicious
-- Malicious
-
-The URL detector is based on Logistic Regression and URL feature extraction.
-
----
-
-# Workflow
-
-The `/predict` endpoint follows this pipeline:
-
-1. Receive email/message content
-2. Detect message language
-3. Extract URLs from text
-4. Analyze message content using NLP models
-5. Analyze extracted URLs
-6. Combine prediction results
-7. Return final classification
-
-Possible results:
-
-- Malicious
-- Not Malicious
-
----
-
-# API Endpoints
-
-## Predict Endpoint
-
-```http
-POST /predict
-```
-
-### Request Example
-
-```json
-{
-  "text": "Your account has been suspended. Click here to verify your identity."
-}
-```
-
-### Response Example
-
-```json
-{
-  "text_prediction": "Spam",
-  "url_prediction": "Malicious",
-  "final_prediction": "Malicious"
-}
-```
-
----
-
-# Installation
-
-## 1. Clone the Repository
+### 1. Install Dependencies
 
 ```bash
-git clone https://github.com/zienabmakhloof-ai/Arabic-English-Email-Spam-detection.git
+pip install -r requirements.txt
 ```
 
----
+### 2. Run on Google Colab
 
-## 2. Running the Project
+```python
+!pip install -r requirements.txt
+!python app/main.py
+```
+
+### 3. Run Locally
 
 ```bash
-open colab and uplaod colab_run.ipynb
-
-run the cells then open the generate links (ngrok)
+cd app
+python main.py
 ```
 
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology |
+|-----------|-----------|
+| Backend | FastAPI + Python |
+| Arabic NLP | AraBERT (TensorFlow) |
+| English NLP | BERT — Spam Detector (PyTorch) |
+| URL Detection | Logistic Regression (scikit-learn) |
+| Language Detection | langdetect |
+| URL Extraction | OpenRouter API (LLaMA 4) |
+| Frontend | HTML / CSS (Bilingual AR+EN) |
 
 ---
 
+## 👩‍💻 Developer
 
-# Frontend Pages
-
-The project includes ready-to-use frontend templates for:
-
-- Homepage
-- About Us page
-- Email analysis interface
-- Junk emails page
-- Prediction results
+**Eng. Zainab Makhloof**  
+Personal Independent Project — 2025
 
 ---
 
-# Data Storage
-
-Suspicious emails and analyzed links are stored in Excel files:
-
-- `emails.xlsx`
-- `links.xlsx`
-
-Stored information includes:
-
-- Original message
-- Text prediction
-- URL prediction
-- Final classification
-- Extracted URLs
-
----
-
-# Results
-[Results/image1.png]
-[Results/image2.png]
-
-
-# Security Notes
-
-Before deploying the project publicly:
-
-- Remove hardcoded API keys and tokens
-- Move secrets to environment variables
-- Use a secure database instead of Excel files
-- Add authentication and authorization
-- Enable request validation and rate limiting
-
----
-
-# Future Improvements
-
-- Database integration (PostgreSQL / MongoDB)
-- User authentication system
-- Admin dashboard
-- Real-time email scanning
-- Browser extension support
-- Docker deployment
-- CI/CD integration
-- Improved phishing detection accuracy
-
----
-
-# Example Use Cases
-
-- Email spam filtering
-- Phishing detection systems
-- Secure messaging platforms
-- Cybersecurity research projects
-- AI-based email security solutions
-
----
-
-# Contributors
-
-Developed by Zienab Makhloof.
-
----
-
-# Contact
-
-For questions, suggestions, or collaboration opportunities:
-
-- GitHub: https://github.com/zienabmakhloof-ai
-- Email: zienabmakhloof0@gmail.com
+*Mail Pawns — Making email safer for Arabic and English speakers alike.*
