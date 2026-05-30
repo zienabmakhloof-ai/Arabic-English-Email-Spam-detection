@@ -18,7 +18,7 @@ The system analyzes email text content and embedded URLs to classify threats wit
 |----------|-------|----------|
 | 🇸🇦 Arabic | AraBERT (Fine-tuned) | **95.84%** |
 | 🇺🇸 English | BERT — Spam Detector | **96.28%** |
-| 🔗 URL Detection | Logistic Regression | — |
+| 🔗 URL Detection | Logistic Regression | **93.06%** |
 
 ---
 ## 🖼️ Page screen
