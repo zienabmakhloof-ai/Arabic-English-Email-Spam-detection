@@ -1,4 +1,7 @@
 # 📧 Mail Pawns — AI-Powered Email Threat Detection
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green)
+![Accuracy](https://img.shields.io/badge/Accuracy-95.84%25-brightgreen)
 
 > **Personal Project** | Developed by **Eng. Zainab Makhloof** | 2025
 
@@ -97,6 +100,8 @@ MailPwans/
 ---
 
 ## 🚀 Running the Project
+
+git clone https://github.com/zienabmakhloof-ai/Arabic-English-Email-Spam-detection
 
 ### 1. Install Dependencies
 
